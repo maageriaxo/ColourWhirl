@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 120" fill="none">
+  <!-- Whirl Petals -->
+  <g transform="translate(60, 55)">
+    <!-- Petal 1: Purple -->
+    <path d="M 0,-36 C 14,-36 28,-26 28,-12 C 28,2 14,0 0,0 C -6,-14 -6,-28 0,-36 Z" fill="#6C3BAA" />
+    <!-- Petal 2: Magenta / Pink -->
+    <g transform="rotate(60)">
+      <path d="M 0,-36 C 14,-36 28,-26 28,-12 C 28,2 14,0 0,0 C -6,-14 -6,-28 0,-36 Z" fill="#E83E8C" />
+    </g>
+    <!-- Petal 3: Cyan / Teal -->
+    <g transform="rotate(120)">
+      <path d="M 0,-36 C 14,-36 28,-26 28,-12 C 28,2 14,0 0,0 C -6,-14 -6,-28 0,-36 Z" fill="#00B4D8" />
+    </g>
+    <!-- Petal 4: Lime Green -->
+    <g transform="rotate(180)">
+      <path d="M 0,-36 C 14,-36 28,-26 28,-12 C 28,2 14,0 0,0 C -6,-14 -6,-28 0,-36 Z" fill="#79C247" />
+    </g>
+    <!-- Petal 5: Sunny Yellow -->
+    <g transform="rotate(240)">
+      <path d="M 0,-36 C 14,-36 28,-26 28,-12 C 28,2 14,0 0,0 C -6,-14 -6,-28 0,-36 Z" fill="#F9B233" />
+    </g>
+    <!-- Petal 6: Warm Orange -->
+    <g transform="rotate(300)">
+      <path d="M 0,-36 C 14,-36 28,-26 28,-12 C 28,2 14,0 0,0 C -6,-14 -6,-28 0,-36 Z" fill="#F26419" />
+    </g>
+    <circle cx="0" cy="0" r="4.5" fill="#FFFFFF" />
+  </g>
+
+  <!-- Typography -->
+  <text x="125" y="58" font-family="'Outfit', 'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800" letter-spacing="-0.5">
+    <tspan fill="#0077B6">Colour</tspan><tspan fill="#E85D04">Whirl</tspan>
+  </text>
+  <text x="130" y="80" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="500" fill="#64748B" letter-spacing="3">
+    — WHIRL YOUR WORLD —
+  </text>
+</svg>
