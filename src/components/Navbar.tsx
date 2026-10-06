@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { ShoppingBag, Phone, Menu, X, Sparkles, BookOpen } from 'lucide-react';
-import { CONTACT_INFO } from '../data/books';
+import { ShoppingBag, User, Menu, X } from 'lucide-react';
+import { CustomerProfile } from './AccountModal';
 
 interface NavbarProps {
   cartCount: number;
-  onOpenCart?: () => void;
+  profile: CustomerProfile | null;
+  onOpenAccount: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
+export const Navbar: React.FC<NavbarProps> = ({ cartCount, profile, onOpenAccount }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
     { to: '/', label: 'Home' },
     { to: '/books', label: 'All Books' },
-    { to: '/track', label: 'Track Order' },
     { to: '/wellness', label: 'Wellness Journal' },
     { to: '/why-physical', label: 'Why Physical' },
     { to: '/about', label: 'About Us' },
@@ -55,7 +55,19 @@ export const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
           </nav>
 
           {/* Right Action Buttons */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            {/* Account / Profile Button */}
+            <button
+              onClick={onOpenAccount}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold text-slate-700 hover:text-slate-950 hover:bg-slate-100 transition-colors border border-slate-200/80"
+              title={profile ? `Signed in as ${profile.fullName}` : 'Sign In / Account'}
+            >
+              <User className="w-3.5 h-3.5 text-slate-600" />
+              <span className="hidden sm:inline">
+                {profile ? profile.fullName.split(' ')[0] : 'Sign In'}
+              </span>
+            </button>
+
             {/* Shopping Bag Button linking to /cart */}
             <Link
               to="/cart"
@@ -104,23 +116,17 @@ export const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
             </NavLink>
           ))}
 
-          <div className="pt-3 border-t border-slate-100 space-y-2">
-            <a
-              href={`tel:${CONTACT_INFO.phone.replace(/\s+/g, '')}`}
-              className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-bold text-slate-700 bg-slate-50"
+          <div className="pt-3 border-t border-slate-100">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenAccount();
+              }}
+              className="w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold text-slate-700 bg-slate-50 flex items-center gap-2"
             >
-              <Phone className="w-4 h-4 text-rose-500" />
-              <span>Call: {CONTACT_INFO.phone}</span>
-            </a>
-            <a
-              href={`https://wa.me/${CONTACT_INFO.whatsappNumber}?text=${encodeURIComponent('Hello ColourWhirl! I want to order physical books.')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-bold text-emerald-800 bg-emerald-50"
-            >
-              <Sparkles className="w-4 h-4 text-emerald-600" />
-              <span>Chat on WhatsApp ({CONTACT_INFO.phone})</span>
-            </a>
+              <User className="w-4 h-4 text-amber-600" />
+              <span>{profile ? `Account: ${profile.fullName}` : 'Sign In / Save Profile'}</span>
+            </button>
           </div>
         </div>
       )}

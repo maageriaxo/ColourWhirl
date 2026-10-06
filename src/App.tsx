@@ -4,6 +4,7 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { LookInsideModal } from './components/LookInsideModal';
 import { WhatsAppFloatingButton } from './components/WhatsAppFloatingButton';
+import { AccountModal, CustomerProfile } from './components/AccountModal';
 import { HomePage } from './pages/HomePage';
 import { BooksPage } from './pages/BooksPage';
 import { WellnessPage } from './pages/WellnessPage';
@@ -11,7 +12,6 @@ import { WhyPhysicalPage } from './pages/WhyPhysicalPage';
 import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
 import { CartPage } from './pages/CartPage';
-import { TrackOrderPage } from './pages/TrackOrderPage';
 import { BOOKS } from './data/books';
 import { Book, CartItem } from './types';
 
@@ -25,6 +25,7 @@ const ScrollToTop: React.FC = () => {
 };
 
 export const App: React.FC = () => {
+  // Shopping Cart State
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     try {
       const saved = localStorage.getItem('cw_cart');
@@ -34,7 +35,18 @@ export const App: React.FC = () => {
     }
   });
 
+  // Customer Profile / Account State
+  const [customerProfile, setCustomerProfile] = useState<CustomerProfile | null>(() => {
+    try {
+      const saved = localStorage.getItem('cw_customer_profile');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+
   const [previewBookId, setPreviewBookId] = useState<string | null>(null);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
 
   // Sync cart to localStorage
   useEffect(() => {
@@ -44,6 +56,25 @@ export const App: React.FC = () => {
       // ignore
     }
   }, [cartItems]);
+
+  const handleSaveProfile = (newProfile: CustomerProfile) => {
+    setCustomerProfile(newProfile);
+    try {
+      localStorage.setItem('cw_customer_profile', JSON.stringify(newProfile));
+    } catch {
+      // ignore
+    }
+  };
+
+  const handleSignOut = () => {
+    setCustomerProfile(null);
+    try {
+      localStorage.removeItem('cw_customer_profile');
+    } catch {
+      // ignore
+    }
+    setIsAccountOpen(false);
+  };
 
   const handleAddToCart = (book: Book) => {
     setCartItems(prev => {
@@ -90,7 +121,11 @@ export const App: React.FC = () => {
       <div className="min-h-screen flex flex-col bg-[#FAF8F5]">
         
         {/* Multi-page Navbar */}
-        <Navbar cartCount={totalCartCount} />
+        <Navbar 
+          cartCount={totalCartCount} 
+          profile={customerProfile}
+          onOpenAccount={() => setIsAccountOpen(true)}
+        />
 
         {/* Page Content Routes */}
         <main className="flex-1">
@@ -139,15 +174,12 @@ export const App: React.FC = () => {
               element={
                 <CartPage 
                   items={cartItems} 
+                  profile={customerProfile}
                   onUpdateQuantity={handleUpdateQuantity} 
                   onRemoveItem={handleRemoveItem} 
                   onClearCart={handleClearCart} 
                 />
               } 
-            />
-            <Route 
-              path="/track" 
-              element={<TrackOrderPage />} 
             />
           </Routes>
         </main>
@@ -163,6 +195,15 @@ export const App: React.FC = () => {
           book={activePreviewBook}
           onClose={() => setPreviewBookId(null)}
           onAddToCart={handleAddToCart}
+        />
+
+        {/* Customer Account / Sign In Modal */}
+        <AccountModal
+          isOpen={isAccountOpen}
+          onClose={() => setIsAccountOpen(false)}
+          profile={customerProfile}
+          onSaveProfile={handleSaveProfile}
+          onSignOut={handleSignOut}
         />
 
       </div>
