@@ -1,16 +1,38 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, MessageSquare } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Send, CheckCircle2, MessageSquare, ArrowRight, ShieldCheck } from 'lucide-react';
 import { CONTACT_INFO } from '../data/books';
 
 export const ContactPage: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!name || !message) return;
+
+    // Build pre-filled WhatsApp link
+    let waMsg = `Hello Deborah! Here is a direct message from the ColourWhirl website:%0A%0A`;
+    waMsg += `*Name:* ${name}%0A`;
+    if (email) waMsg += `*Email:* ${email}%0A`;
+    if (phone) waMsg += `*Phone:* ${phone}%0A`;
+    waMsg += `*Message:* ${message}%0A`;
+
+    // Also build mailto link
+    const mailSubject = encodeURIComponent(`[ColourWhirl Inquiry] Message from ${name}`);
+    const mailBody = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`);
+
+    // Trigger WhatsApp or mailto
+    window.open(`https://wa.me/${CONTACT_INFO.whatsappNumber}?text=${waMsg}`, '_blank');
     setSubmitted(true);
+  };
+
+  const handleSendEmailDirect = () => {
+    const mailSubject = encodeURIComponent(`[ColourWhirl Note] from ${name}`);
+    const mailBody = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`);
+    window.location.href = `mailto:${CONTACT_INFO.email}?subject=${mailSubject}&body=${mailBody}`;
   };
 
   return (
@@ -19,13 +41,13 @@ export const ContactPage: React.FC = () => {
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto">
         <span className="text-xs font-black uppercase tracking-wider text-rose-600 bg-rose-50 px-3.5 py-1 rounded-full border border-rose-100">
-          We'd Love To Hear From You
+          Get in Touch With Us
         </span>
         <h1 className="text-3xl sm:text-5xl font-black text-slate-900 mt-4 tracking-tight">
           Contact ColourWhirl
         </h1>
         <p className="mt-3 text-base text-slate-600">
-          Have an inquiry, bulk order request, or need help with delivery tracking? Reach out directly to our Nairobi team.
+          Have an inquiry, bulk order request, or question about your delivery? Reach out directly to our Nairobi publishing team.
         </p>
       </div>
 
@@ -47,7 +69,7 @@ export const ContactPage: React.FC = () => {
                 <div>
                   <span className="text-xs text-slate-400 font-bold block">Telephone & WhatsApp</span>
                   <span className="text-base font-bold text-slate-900">{CONTACT_INFO.phone}</span>
-                  <span className="text-xs text-slate-500 block mt-0.5">Contact: {CONTACT_INFO.contactPerson}</span>
+                  <span className="text-xs text-slate-500 block mt-0.5">{CONTACT_INFO.contactPerson} ({CONTACT_INFO.role})</span>
                 </div>
               </a>
 
@@ -59,9 +81,9 @@ export const ContactPage: React.FC = () => {
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-xs text-slate-400 font-bold block">Email Us</span>
+                  <span className="text-xs text-slate-400 font-bold block">Email Inbox</span>
                   <span className="text-base font-bold text-slate-900">{CONTACT_INFO.email}</span>
-                  <span className="text-xs text-slate-500 block mt-0.5">Replies within 1 business day</span>
+                  <span className="text-xs text-slate-500 block mt-0.5">Checked daily by our publishing team</span>
                 </div>
               </a>
 
@@ -72,7 +94,7 @@ export const ContactPage: React.FC = () => {
                 <div>
                   <span className="text-xs text-slate-400 font-bold block">Dispatch Hub</span>
                   <span className="text-base font-bold text-slate-900">{CONTACT_INFO.location}</span>
-                  <span className="text-xs text-slate-500 block mt-0.5">Same-day Nairobi couriers</span>
+                  <span className="text-xs text-slate-500 block mt-0.5">Same-day couriers & countrywide delivery</span>
                 </div>
               </div>
 
@@ -90,7 +112,7 @@ export const ContactPage: React.FC = () => {
             {/* Direct WhatsApp Callout */}
             <div className="pt-4 border-t border-slate-100">
               <a
-                href={`https://wa.me/${CONTACT_INFO.whatsappNumber}?text=${encodeURIComponent('Hello ColourWhirl! I have a question regarding your books.')}`}
+                href={`https://wa.me/${CONTACT_INFO.whatsappNumber}?text=${encodeURIComponent('Hello Deborah! I have a question regarding ColourWhirl books.')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all active:scale-95"
@@ -105,53 +127,77 @@ export const ContactPage: React.FC = () => {
         {/* Right: Message Form */}
         <div className="lg:col-span-7">
           <div className="bg-white rounded-3xl border border-slate-200/90 p-8 sm:p-10 shadow-sm">
-            <h2 className="text-xl font-bold text-slate-900 mb-2">Send Us a Direct Note</h2>
+            <h2 className="text-xl font-bold text-slate-900 mb-1">Send Us a Direct Note</h2>
             <p className="text-xs text-slate-500 mb-6">
-              Fill in your inquiry and we will get back to you shortly.
+              Your note connects straight to Deborah Marege and the ColourWhirl publishing desk.
             </p>
 
             {submitted ? (
-              <div className="p-8 text-center bg-emerald-50 rounded-2xl border border-emerald-200">
-                <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto mb-3" />
-                <h3 className="text-lg font-bold text-slate-900">Message Received!</h3>
-                <p className="text-xs text-slate-600 mt-1 max-w-sm mx-auto">
-                  Thank you, {name}! Deborah and our publishing team will respond to {email} shortly.
+              <div className="p-8 text-center bg-emerald-50 rounded-2xl border border-emerald-200 space-y-4">
+                <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
+                <h3 className="text-lg font-bold text-slate-900">Message Dispatched!</h3>
+                <p className="text-xs text-slate-600 max-w-sm mx-auto">
+                  Your message has been formatted and forwarded to Deborah Marege. You can also send a copy directly to our email inbox:
                 </p>
-                <button
-                  onClick={() => setSubmitted(false)}
-                  className="mt-6 text-xs font-bold text-emerald-800 underline"
-                >
-                  Send another message
-                </button>
+
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                  <button
+                    onClick={handleSendEmailDirect}
+                    className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs"
+                  >
+                    Send to Email ({CONTACT_INFO.email})
+                  </button>
+                  <button
+                    onClick={() => setSubmitted(false)}
+                    className="w-full sm:w-auto px-6 py-2.5 rounded-xl border border-slate-200 text-slate-700 font-bold text-xs hover:bg-slate-50"
+                  >
+                    Write Another Note
+                  </button>
+                </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1">
-                    Your Full Name *
+                    Full Name *
                   </label>
                   <input
                     type="text"
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="e.g. Samuel Mutua"
-                    className="w-full text-xs p-3.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-rose-500 focus:outline-none"
+                    placeholder="Full Name"
+                    className="w-full text-xs p-3.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-rose-500 focus:outline-none bg-slate-50/50"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="e.g. samuel@example.com"
-                    className="w-full text-xs p-3.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-rose-500 focus:outline-none"
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Email Address"
+                      className="w-full text-xs p-3.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-rose-500 focus:outline-none bg-slate-50/50"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                      Phone Number (Optional)
+                    </label>
+                    <input
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="Phone Number"
+                      className="w-full text-xs p-3.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-rose-500 focus:outline-none bg-slate-50/50"
+                    />
+                  </div>
                 </div>
 
                 <div>
@@ -163,18 +209,23 @@ export const ContactPage: React.FC = () => {
                     required
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Ask about our physical book editions, custom gift hampers, school orders, or delivery timelines..."
-                    className="w-full text-xs p-3.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-rose-500 focus:outline-none"
+                    placeholder="Write your message here..."
+                    className="w-full text-xs p-3.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-rose-500 focus:outline-none bg-slate-50/50"
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  className="w-full py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 transition-all active:scale-95"
-                >
-                  <Send className="w-4 h-4" />
-                  <span>Send Message to ColourWhirl</span>
-                </button>
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    className="w-full py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 transition-all active:scale-95"
+                  >
+                    <Send className="w-4 h-4" />
+                    <span>Send Note to Deborah & Publishing Desk</span>
+                  </button>
+                  <p className="text-[11px] text-center text-slate-400 mt-2">
+                    Delivered instantly to WhatsApp ({CONTACT_INFO.phone}) and {CONTACT_INFO.email}
+                  </p>
+                </div>
               </form>
             )}
           </div>

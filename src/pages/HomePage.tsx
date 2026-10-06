@@ -224,79 +224,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onAddToCart, onPreviewBook }
         </div>
       </section>
 
-      {/* Featured Book Showcase: Adults Colouring Book */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-12 shadow-lg">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            {/* Cover and Quick Peek */}
-            <div className="lg:col-span-5 flex flex-col items-center">
-              <div 
-                onClick={() => onPreviewBook(adultBook.id)}
-                className="w-56 sm:w-64 rounded-2xl overflow-hidden book-shadow cursor-pointer group relative"
-              >
-                <img 
-                  src={adultBook.coverImage} 
-                  alt={adultBook.title} 
-                  className="w-full h-auto object-cover group-hover:scale-105 transition-transform" 
-                />
-                <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span className="bg-white text-slate-900 text-xs font-bold px-3.5 py-1.5 rounded-full shadow flex items-center gap-1.5">
-                    <BookOpen className="w-3.5 h-3.5 text-amber-500" />
-                    Click to Peek Inside
-                  </span>
-                </div>
-              </div>
-              <button
-                onClick={() => onPreviewBook(adultBook.id)}
-                className="mt-4 text-xs font-bold text-slate-600 hover:text-rose-600 flex items-center gap-1"
-              >
-                <BookOpen className="w-3.5 h-3.5" />
-                <span>Browse Sample Pages</span>
-              </button>
-            </div>
 
-            {/* Description and Add to Bag */}
-            <div className="lg:col-span-7 space-y-4">
-              <span className="text-xs font-black uppercase tracking-wider text-amber-600 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
-                Adults Relaxation Series
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
-                {adultBook.title}
-              </h3>
-              <p className="text-xs text-slate-500 italic">{adultBook.subtitle}</p>
-
-              <p className="text-sm text-slate-600 leading-relaxed">
-                {adultBook.description}
-              </p>
-
-              <div className="py-2 flex items-baseline gap-3">
-                <span className="text-3xl font-black text-slate-900">KES {adultBook.price}</span>
-                <span className="text-sm text-slate-400 line-through">KES {adultBook.originalPrice}</span>
-                <span className="text-xs text-emerald-700 bg-emerald-50 font-bold px-2.5 py-1 rounded-full">
-                  In Stock in Nairobi
-                </span>
-              </div>
-
-              <div className="flex flex-wrap gap-3 pt-2">
-                <button
-                  onClick={() => onAddToCart(adultBook)}
-                  className="px-6 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm shadow-md transition-all active:scale-95"
-                >
-                  Add Adults Book to Bag (KES {adultBook.price})
-                </button>
-                <Link
-                  to="/books"
-                  className="px-6 py-3.5 rounded-2xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm transition-all"
-                >
-                  View All Books
-                </Link>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
 
       {/* Customer Trust & Reviews */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -37,10 +37,37 @@ export interface DeliveryOption {
 export interface OrderDetails {
   fullName: string;
   phone: string;
-  email: string;
+  email?: string;
   deliveryOptionId: string;
   county: string;
   areaAddress: string;
   deliveryInstructions?: string;
-  paymentMethod: 'mpesa' | 'whatsapp';
+  paymentMethod: 'mpesa' | 'whatsapp' | 'pod';
 }
+
+export interface SavedOrder {
+  id: string; // e.g. CW-7489
+  createdAt: string;
+  items: CartItem[];
+  subtotal: number;
+  deliveryFee: number;
+  total: number;
+  deliveryOption: DeliveryOption;
+  customer: {
+    fullName: string;
+    phone: string;
+    email?: string;
+    county: string;
+    address: string;
+    instructions?: string;
+  };
+  paymentMethod: 'mpesa' | 'whatsapp' | 'pod';
+  status: 'confirmed' | 'processing' | 'dispatched' | 'delivered';
+  timeline: {
+    title: string;
+    description: string;
+    time: string;
+    done: boolean;
+  }[];
+}
+

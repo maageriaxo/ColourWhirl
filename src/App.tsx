@@ -11,6 +11,7 @@ import { WhyPhysicalPage } from './pages/WhyPhysicalPage';
 import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
 import { CartPage } from './pages/CartPage';
+import { TrackOrderPage } from './pages/TrackOrderPage';
 import { BOOKS } from './data/books';
 import { Book, CartItem } from './types';
 
@@ -143,6 +144,10 @@ export const App: React.FC = () => {
                   onClearCart={handleClearCart} 
                 />
               } 
+            />
+            <Route 
+              path="/track" 
+              element={<TrackOrderPage />} 
             />
           </Routes>
         </main>

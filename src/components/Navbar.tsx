@@ -14,6 +14,7 @@ export const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
   const navLinks = [
     { to: '/', label: 'Home' },
     { to: '/books', label: 'All Books' },
+    { to: '/track', label: 'Track Order' },
     { to: '/wellness', label: 'Wellness Journal' },
     { to: '/why-physical', label: 'Why Physical' },
     { to: '/about', label: 'About Us' },
@@ -55,17 +56,6 @@ export const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
 
           {/* Right Action Buttons */}
           <div className="flex items-center gap-3">
-            {/* Direct Phone / WhatsApp Button */}
-            <a
-              href={`https://wa.me/${CONTACT_INFO.whatsappNumber}?text=${encodeURIComponent('Hello ColourWhirl! I would like to order physical books.')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-colors"
-            >
-              <Phone className="w-3.5 h-3.5 text-emerald-600" />
-              <span>{CONTACT_INFO.phone}</span>
-            </a>
-
             {/* Shopping Bag Button linking to /cart */}
             <Link
               to="/cart"
