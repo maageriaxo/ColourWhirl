@@ -1,26 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { BookCatalog } from './components/BookCatalog';
-import { LookInsideModal } from './components/LookInsideModal';
-import { CartDrawer } from './components/CartDrawer';
-import { CheckoutModal } from './components/CheckoutModal';
-import { WhyPhysical } from './components/WhyPhysical';
-import { WellnessFeature } from './components/WellnessFeature';
-import { AboutBrand } from './components/AboutBrand';
 import { Footer } from './components/Footer';
+import { LookInsideModal } from './components/LookInsideModal';
 import { WhatsAppFloatingButton } from './components/WhatsAppFloatingButton';
-import { BOOKS, DELIVERY_OPTIONS } from './data/books';
+import { HomePage } from './pages/HomePage';
+import { BooksPage } from './pages/BooksPage';
+import { WellnessPage } from './pages/WellnessPage';
+import { WhyPhysicalPage } from './pages/WhyPhysicalPage';
+import { AboutPage } from './pages/AboutPage';
+import { ContactPage } from './pages/ContactPage';
+import { CartPage } from './pages/CartPage';
+import { BOOKS } from './data/books';
 import { Book, CartItem } from './types';
 
-export const App: React.FC = () => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  const [previewBookId, setPreviewBookId] = useState<string | null>(null);
-  const [selectedDeliveryId, setSelectedDeliveryId] = useState<string>(DELIVERY_OPTIONS[0].id);
+// Scroll to top helper on route navigation
+const ScrollToTop: React.FC = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
 
-  // Cart Handlers
+export const App: React.FC = () => {
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    try {
+      const saved = localStorage.getItem('cw_cart');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  const [previewBookId, setPreviewBookId] = useState<string | null>(null);
+
+  // Sync cart to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem('cw_cart', JSON.stringify(cartItems));
+    } catch {
+      // ignore
+    }
+  }, [cartItems]);
+
   const handleAddToCart = (book: Book) => {
     setCartItems(prev => {
       const existing = prev.find(item => item.book.id === book.id);
@@ -40,8 +63,8 @@ export const App: React.FC = () => {
       prev
         .map(item => {
           if (item.book.id === bookId) {
-            const newQ = item.quantity + delta;
-            return newQ > 0 ? { ...item, quantity: newQ } : null;
+            const nextQ = item.quantity + delta;
+            return nextQ > 0 ? { ...item, quantity: nextQ } : null;
           }
           return item;
         })
@@ -57,95 +80,89 @@ export const App: React.FC = () => {
     setCartItems([]);
   };
 
-  const handleDirectOrder = (book: Book) => {
-    handleAddToCart(book);
-    setIsCartOpen(false);
-    setIsCheckoutOpen(true);
-  };
-
-  const handleScrollToCatalog = () => {
-    const el = document.getElementById('catalog');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   const activePreviewBook = BOOKS.find(b => b.id === previewBookId) || null;
   const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF8F5]">
-      {/* Sticky Navigation */}
-      <Navbar
-        cartCount={totalCartCount}
-        onOpenCart={() => setIsCartOpen(true)}
-        onScrollToCatalog={handleScrollToCatalog}
-      />
+    <BrowserRouter>
+      <ScrollToTop />
+      <div className="min-h-screen flex flex-col bg-[#FAF8F5]">
+        
+        {/* Multi-page Navbar */}
+        <Navbar cartCount={totalCartCount} />
 
-      <main className="flex-1">
-        {/* Hero Banner */}
-        <Hero
-          onScrollToCatalog={handleScrollToCatalog}
-          onPreviewBook={(id) => setPreviewBookId(id)}
-        />
+        {/* Page Content Routes */}
+        <main className="flex-1">
+          <Routes>
+            <Route 
+              path="/" 
+              element={
+                <HomePage 
+                  onAddToCart={handleAddToCart} 
+                  onPreviewBook={setPreviewBookId} 
+                />
+              } 
+            />
+            <Route 
+              path="/books" 
+              element={
+                <BooksPage 
+                  onAddToCart={handleAddToCart} 
+                  onPreviewBook={setPreviewBookId} 
+                />
+              } 
+            />
+            <Route 
+              path="/wellness" 
+              element={
+                <WellnessPage 
+                  onAddToCart={handleAddToCart} 
+                  onPreviewBook={setPreviewBookId} 
+                />
+              } 
+            />
+            <Route 
+              path="/why-physical" 
+              element={<WhyPhysicalPage />} 
+            />
+            <Route 
+              path="/about" 
+              element={<AboutPage />} 
+            />
+            <Route 
+              path="/contact" 
+              element={<ContactPage />} 
+            />
+            <Route 
+              path="/cart" 
+              element={
+                <CartPage 
+                  items={cartItems} 
+                  onUpdateQuantity={handleUpdateQuantity} 
+                  onRemoveItem={handleRemoveItem} 
+                  onClearCart={handleClearCart} 
+                />
+              } 
+            />
+          </Routes>
+        </main>
 
-        {/* Physical Books Catalog */}
-        <BookCatalog
+        {/* Global Footer */}
+        <Footer />
+
+        {/* Direct WhatsApp Action Button */}
+        <WhatsAppFloatingButton />
+
+        {/* Global Look Inside Modal */}
+        <LookInsideModal
+          book={activePreviewBook}
+          onClose={() => setPreviewBookId(null)}
           onAddToCart={handleAddToCart}
-          onPreviewBook={(id) => setPreviewBookId(id)}
-          onDirectOrder={handleDirectOrder}
         />
 
-        {/* Deep Dive into Flagship Wellness Journal */}
-        <WellnessFeature
-          onPreviewBook={(id) => setPreviewBookId(id)}
-          onAddToCart={handleAddToCart}
-        />
-
-        {/* Why Choose Physical Print */}
-        <WhyPhysical />
-
-        {/* Brand Story, Deborah Marege & Contact */}
-        <AboutBrand />
-      </main>
-
-      {/* Footer */}
-      <Footer />
-
-      {/* Floating WhatsApp Action Button */}
-      <WhatsAppFloatingButton />
-
-      {/* Look Inside Modal */}
-      <LookInsideModal
-        book={activePreviewBook}
-        onClose={() => setPreviewBookId(null)}
-        onAddToCart={handleAddToCart}
-      />
-
-      {/* Slide-over Cart Drawer */}
-      <CartDrawer
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        items={cartItems}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemoveItem={handleRemoveItem}
-        selectedDeliveryId={selectedDeliveryId}
-        onSelectDelivery={setSelectedDeliveryId}
-        onProceedCheckout={() => {
-          setIsCartOpen(false);
-          setIsCheckoutOpen(true);
-        }}
-      />
-
-      {/* Physical Delivery & M-Pesa Checkout Modal */}
-      <CheckoutModal
-        isOpen={isCheckoutOpen}
-        onClose={() => setIsCheckoutOpen(false)}
-        items={cartItems}
-        selectedDeliveryId={selectedDeliveryId}
-        onClearCart={handleClearCart}
-      />
-    </div>
+      </div>
+    </BrowserRouter>
   );
 };
+
 export default App;

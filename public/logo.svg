@@ -1,36 +1,70 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 120" fill="none">
-  <!-- Whirl Petals -->
-  <g transform="translate(60, 55)">
-    <!-- Petal 1: Purple -->
-    <path d="M 0,-36 C 14,-36 28,-26 28,-12 C 28,2 14,0 0,0 C -6,-14 -6,-28 0,-36 Z" fill="#6C3BAA" />
-    <!-- Petal 2: Magenta / Pink -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" fill="none" width="100%" height="100%">
+  <!-- Definitions for Gradients and Shadows -->
+  <defs>
+    <linearGradient id="petal-orange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF7A00" />
+      <stop offset="100%" stop-color="#E65100" />
+    </linearGradient>
+    <linearGradient id="petal-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7B2CBF" />
+      <stop offset="100%" stop-color="#5A189A" />
+    </linearGradient>
+    <linearGradient id="petal-pink" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF2E93" />
+      <stop offset="100%" stop-color="#D81159" />
+    </linearGradient>
+    <linearGradient id="petal-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00B4D8" />
+      <stop offset="100%" stop-color="#0077B6" />
+    </linearGradient>
+    <linearGradient id="petal-green" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#80ED99" />
+      <stop offset="100%" stop-color="#38B000" />
+    </linearGradient>
+    <linearGradient id="petal-yellow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD166" />
+      <stop offset="100%" stop-color="#F77F00" />
+    </linearGradient>
+    <filter id="logo-drop" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.18" />
+    </filter>
+  </defs>
+
+  <!-- Pinwheel Emblem -->
+  <g transform="translate(42, 40)" filter="url(#logo-drop)">
+    <!-- Petal 1 (Top Orange) -->
+    <path d="M 0,-26 C 10,-26 20,-18 20,-7 C 20,4 9,2 0,0 C -4,-10 -4,-20 0,-26 Z" fill="url(#petal-orange)" />
+    <!-- Petal 2 (Top-Right Pink) -->
     <g transform="rotate(60)">
-      <path d="M 0,-36 C 14,-36 28,-26 28,-12 C 28,2 14,0 0,0 C -6,-14 -6,-28 0,-36 Z" fill="#E83E8C" />
+      <path d="M 0,-26 C 10,-26 20,-18 20,-7 C 20,4 9,2 0,0 C -4,-10 -4,-20 0,-26 Z" fill="url(#petal-pink)" />
     </g>
-    <!-- Petal 3: Cyan / Teal -->
+    <!-- Petal 3 (Bottom-Right Cyan) -->
     <g transform="rotate(120)">
-      <path d="M 0,-36 C 14,-36 28,-26 28,-12 C 28,2 14,0 0,0 C -6,-14 -6,-28 0,-36 Z" fill="#00B4D8" />
+      <path d="M 0,-26 C 10,-26 20,-18 20,-7 C 20,4 9,2 0,0 C -4,-10 -4,-20 0,-26 Z" fill="url(#petal-cyan)" />
     </g>
-    <!-- Petal 4: Lime Green -->
+    <!-- Petal 4 (Bottom Green) -->
     <g transform="rotate(180)">
-      <path d="M 0,-36 C 14,-36 28,-26 28,-12 C 28,2 14,0 0,0 C -6,-14 -6,-28 0,-36 Z" fill="#79C247" />
+      <path d="M 0,-26 C 10,-26 20,-18 20,-7 C 20,4 9,2 0,0 C -4,-10 -4,-20 0,-26 Z" fill="url(#petal-green)" />
     </g>
-    <!-- Petal 5: Sunny Yellow -->
+    <!-- Petal 5 (Bottom-Left Yellow) -->
     <g transform="rotate(240)">
-      <path d="M 0,-36 C 14,-36 28,-26 28,-12 C 28,2 14,0 0,0 C -6,-14 -6,-28 0,-36 Z" fill="#F9B233" />
+      <path d="M 0,-26 C 10,-26 20,-18 20,-7 C 20,4 9,2 0,0 C -4,-10 -4,-20 0,-26 Z" fill="url(#petal-yellow)" />
     </g>
-    <!-- Petal 6: Warm Orange -->
+    <!-- Petal 6 (Top-Left Purple) -->
     <g transform="rotate(300)">
-      <path d="M 0,-36 C 14,-36 28,-26 28,-12 C 28,2 14,0 0,0 C -6,-14 -6,-28 0,-36 Z" fill="#F26419" />
+      <path d="M 0,-26 C 10,-26 20,-18 20,-7 C 20,4 9,2 0,0 C -4,-10 -4,-20 0,-26 Z" fill="url(#petal-purple)" />
     </g>
-    <circle cx="0" cy="0" r="4.5" fill="#FFFFFF" />
+    <!-- Center Core -->
+    <circle cx="0" cy="0" r="3.5" fill="#FFFFFF" />
   </g>
 
-  <!-- Typography -->
-  <text x="125" y="58" font-family="'Outfit', 'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="800" letter-spacing="-0.5">
-    <tspan fill="#0077B6">Colour</tspan><tspan fill="#E85D04">Whirl</tspan>
+  <!-- Typography: ColourWhirl -->
+  <text x="86" y="44" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="28" font-weight="900" letter-spacing="-0.6">
+    <tspan fill="#1D4ED8">Colour</tspan><tspan fill="#EA580C">Whirl</tspan>
   </text>
-  <text x="130" y="80" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="500" fill="#64748B" letter-spacing="3">
-    — WHIRL YOUR WORLD —
+  
+  <!-- Subtitle Tagline -->
+  <text x="88" y="62" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="9" font-weight="700" fill="#64748B" letter-spacing="3.2">
+    WHIRL YOUR WORLD
   </text>
 </svg>
