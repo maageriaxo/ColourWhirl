@@ -8,7 +8,6 @@ import { AccountModal, CustomerProfile } from './components/AccountModal';
 import { HomePage } from './pages/HomePage';
 import { BooksPage } from './pages/BooksPage';
 import { WellnessPage } from './pages/WellnessPage';
-import { WhyPhysicalPage } from './pages/WhyPhysicalPage';
 import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
 import { CartPage } from './pages/CartPage';
@@ -159,7 +158,7 @@ export const App: React.FC = () => {
             />
             <Route 
               path="/why-physical" 
-              element={<WhyPhysicalPage />} 
+              element={<AboutPage />} 
             />
             <Route 
               path="/about" 

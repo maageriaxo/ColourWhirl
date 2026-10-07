@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Trash2, Plus, Minus, ShoppingBag, ArrowRight, Truck, Phone, 
-  ShieldCheck, CheckCircle2, Loader2, MapPin, Mail, MessageCircle, AlertCircle 
+  ShieldCheck, CheckCircle2, MapPin, Mail, MessageCircle 
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { CartItem, SavedOrder } from '../types';
@@ -25,7 +25,7 @@ export const CartPage: React.FC<CartPageProps> = ({
   onRemoveItem,
   onClearCart
 }) => {
-  // Address Inputs (clean, no sample dummy names)
+  // Address Inputs (clean labels without dummy names)
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phone, setPhone] = useState('');
@@ -35,9 +35,8 @@ export const CartPage: React.FC<CartPageProps> = ({
   const [streetAddress, setStreetAddress] = useState('');
   const [deliveryNotes, setDeliveryNotes] = useState('');
 
-  // Delivery & Method Selection (all accessible simultaneously)
+  // Delivery Method Selection
   const [selectedDeliveryId, setSelectedDeliveryId] = useState<string>(DELIVERY_OPTIONS[0].id);
-  const [isProcessing, setIsProcessing] = useState(false);
   const [completedOrder, setCompletedOrder] = useState<SavedOrder | null>(null);
 
   // Pre-fill from profile if logged in
@@ -60,21 +59,21 @@ export const CartPage: React.FC<CartPageProps> = ({
 
   const validateForm = () => {
     if (!firstName.trim()) {
-      alert('Please enter your First Name.');
+      alert('Please fill in your First Name before placing your order.');
       return false;
     }
     if (!phone.trim()) {
-      alert('Please enter your Mobile Number.');
+      alert('Please fill in your Mobile Number before placing your order.');
       return false;
     }
     if (!streetAddress.trim()) {
-      alert('Please enter your Delivery Address (Street / Building / Area).');
+      alert('Please fill in your Delivery Address (Street / Building / Area).');
       return false;
     }
     return true;
   };
 
-  const createOrderRecord = (method: 'whatsapp' | 'email' | 'mpesa'): SavedOrder => {
+  const createOrderRecord = (channel: 'whatsapp' | 'email'): SavedOrder => {
     const newOrderId = `CW-${Math.floor(1000 + Math.random() * 9000)}`;
     const fullName = `${firstName.trim()} ${lastName.trim()}`.trim();
     const fullAddress = `${streetAddress.trim()}, ${cityTown.trim() ? cityTown.trim() + ', ' : ''}${county}`;
@@ -95,12 +94,12 @@ export const CartPage: React.FC<CartPageProps> = ({
         address: fullAddress,
         instructions: deliveryNotes.trim()
       },
-      paymentMethod: method,
+      paymentMethod: channel,
       status: 'confirmed',
       timeline: [
         {
-          title: 'Order Tailored & Received',
-          description: `Received via ${method.toUpperCase()}. Deborah & the team will confirm dispatch.`,
+          title: `Order Dispatched via ${channel === 'whatsapp' ? 'WhatsApp' : 'Email'}`,
+          description: `Direct order ticket received by Deborah Marege at ColourWhirl.`,
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           done: true
         }
@@ -108,18 +107,19 @@ export const CartPage: React.FC<CartPageProps> = ({
     };
   };
 
-  // 1. WhatsApp Tailored Order (Primary)
-  const handleWhatsAppOrder = () => {
+  // Option 1: WhatsApp Order
+  const handleOrderViaWhatsApp = () => {
     if (!validateForm()) return;
 
     const order = createOrderRecord('whatsapp');
     saveNewOrder(order);
 
     let msg = `*NEW ORDER — ColourWhirl Nairobi*%0A%0A`;
-    msg += `*Order Ref:* ${order.id}%0A`;
-    msg += `*Customer:* ${order.customer.fullName} (${order.customer.phone})%0A`;
-    if (email) msg += `*Email:* ${email}%0A`;
-    msg += `*Delivery To:* ${order.customer.address}%0A`;
+    msg += `*Order Reference:* ${order.id}%0A`;
+    msg += `*Customer Name:* ${order.customer.fullName}%0A`;
+    msg += `*Mobile Phone:* ${order.customer.phone}%0A`;
+    if (email.trim()) msg += `*Email:* ${email.trim()}%0A`;
+    msg += `*Delivery Address:* ${order.customer.address}%0A`;
     msg += `*Delivery Service:* ${selectedDelivery.name} (KES ${deliveryFee})%0A%0A`;
     msg += `*Books Ordered:*%0A`;
     items.forEach((item, idx) => {
@@ -127,63 +127,51 @@ export const CartPage: React.FC<CartPageProps> = ({
     });
     msg += `%0A*Subtotal:* KES ${subtotal}%0A`;
     msg += `*Delivery Fee:* KES ${deliveryFee}%0A`;
-    msg += `*TOTAL DUE:* KES ${grandTotal}%0A`;
-    if (deliveryNotes) msg += `%0A*Special Instructions:* ${deliveryNotes}%0A`;
-    msg += `%0APlease confirm dispatch timeline and Lipa Na M-Pesa details!`;
+    msg += `*TOTAL AMOUNT DUE:* KES ${grandTotal}%0A`;
+    if (deliveryNotes.trim()) msg += `%0A*Special Instructions:* ${deliveryNotes.trim()}%0A`;
+    msg += `%0APlease confirm packaging timeline and payment details!`;
 
     window.open(`https://wa.me/${CONTACT_INFO.whatsappNumber}?text=${msg}`, '_blank');
 
     setCompletedOrder(order);
     onClearCart();
-    confetti({ particleCount: 100, spread: 70 });
+    confetti({ particleCount: 110, spread: 75 });
   };
 
-  // 2. Email Tailored Order
-  const handleEmailOrder = () => {
+  // Option 2: Email Order
+  const handleOrderViaEmail = () => {
     if (!validateForm()) return;
 
     const order = createOrderRecord('email');
     saveNewOrder(order);
 
-    const subject = encodeURIComponent(`[New Book Order ${order.id}] ${order.customer.fullName}`);
+    const subject = encodeURIComponent(`[Order Ref: ${order.id}] Physical Book Order - ${order.customer.fullName}`);
     let body = `Hello Deborah and ColourWhirl Publishing Team,\n\n`;
-    body += `I would like to order the following physical books:\n\n`;
+    body += `I would like to place an order for the following physical books:\n\n`;
+    body += `ORDER REFERENCE: ${order.id}\n`;
+    body += `CUSTOMER NAME: ${order.customer.fullName}\n`;
+    body += `MOBILE PHONE: ${order.customer.phone}\n`;
+    if (email.trim()) body += `EMAIL: ${email.trim()}\n`;
+    body += `DELIVERY ADDRESS: ${order.customer.address}\n`;
+    body += `DELIVERY SERVICE: ${selectedDelivery.name} (KES ${deliveryFee})\n\n`;
+    body += `BOOKS ORDERED:\n`;
     items.forEach((item, idx) => {
       body += `${idx + 1}. ${item.book.title} x ${item.quantity} = KES ${item.book.price * item.quantity}\n`;
     });
-    body += `\nSubtotal: KES ${subtotal}\n`;
-    body += `Delivery Service: ${selectedDelivery.name} (KES ${deliveryFee})\n`;
+    body += `\nSUBTOTAL: KES ${subtotal}\n`;
+    body += `DELIVERY FEE: KES ${deliveryFee}\n`;
     body += `TOTAL AMOUNT DUE: KES ${grandTotal}\n\n`;
-    body += `Customer Details:\n`;
-    body += `Name: ${order.customer.fullName}\n`;
-    body += `Phone: ${phone}\n`;
-    body += `Delivery Address: ${order.customer.address}\n`;
-    if (deliveryNotes) body += `Notes: ${deliveryNotes}\n`;
+    if (deliveryNotes.trim()) body += `SPECIAL INSTRUCTIONS:\n${deliveryNotes.trim()}\n\n`;
+    body += `Please reply with dispatch confirmation and Lipa Na M-Pesa details.\n\nThank you!`;
 
     window.location.href = `mailto:${CONTACT_INFO.email}?subject=${subject}&body=${encodeURIComponent(body)}`;
 
     setCompletedOrder(order);
     onClearCart();
-    confetti({ particleCount: 100, spread: 70 });
+    confetti({ particleCount: 110, spread: 75 });
   };
 
-  // 3. M-Pesa STK Push Prompt
-  const handleMpesaOrder = () => {
-    if (!validateForm()) return;
-
-    setIsProcessing(true);
-    const order = createOrderRecord('mpesa');
-    saveNewOrder(order);
-
-    setTimeout(() => {
-      setIsProcessing(false);
-      setCompletedOrder(order);
-      onClearCart();
-      confetti({ particleCount: 120, spread: 80 });
-    }, 2000);
-  };
-
-  // Completed Confirmation Screen
+  // Completed Confirmation Screen (No track order)
   if (completedOrder) {
     return (
       <div className="py-16 sm:py-24 max-w-2xl mx-auto px-4 sm:px-6 text-center">
@@ -193,14 +181,14 @@ export const CartPage: React.FC<CartPageProps> = ({
           </div>
 
           <span className="text-xs font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3.5 py-1 rounded-full border border-emerald-200">
-            Order Dispatched to Publishing Desk
+            Order Sent to ColourWhirl Desk
           </span>
 
           <h1 className="text-3xl sm:text-4xl font-black text-slate-900 mt-4">
             Thank you, {completedOrder.customer.fullName.split(' ')[0]}!
           </h1>
           <p className="text-sm text-slate-600 mt-2 max-w-md mx-auto">
-            Your order <span className="font-mono font-bold text-slate-900">{completedOrder.id}</span> has been communicated to Deborah Marege. We tailor and inspect every copy before dispatch.
+            Your order <span className="font-mono font-bold text-slate-900">{completedOrder.id}</span> has been pre-typed and sent to Deborah Marege. We tailor and inspect every copy before dispatch.
           </p>
 
           <div className="mt-8 p-6 bg-slate-50 rounded-2xl border border-slate-200 text-left text-xs space-y-2.5">
@@ -211,6 +199,10 @@ export const CartPage: React.FC<CartPageProps> = ({
             <div className="flex justify-between border-b border-slate-200 pb-2">
               <span className="text-slate-500">Recipient Name:</span>
               <span className="font-semibold text-slate-900">{completedOrder.customer.fullName}</span>
+            </div>
+            <div className="flex justify-between border-b border-slate-200 pb-2">
+              <span className="text-slate-500">Mobile Phone:</span>
+              <span className="font-semibold text-slate-900">{completedOrder.customer.phone}</span>
             </div>
             <div className="flex justify-between border-b border-slate-200 pb-2">
               <span className="text-slate-500">Delivery Address:</span>
@@ -276,19 +268,19 @@ export const CartPage: React.FC<CartPageProps> = ({
   return (
     <div className="py-8 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      {/* Title */}
+      {/* Page Title */}
       <div className="mb-8">
         <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-          Checkout & Order Tailoring
+          Checkout & Order Placement
         </h1>
         <p className="text-xs sm:text-sm text-slate-500 mt-1">
-          Provide your delivery details and choose how you would like to tailor your order with us.
+          Fill in your delivery address, select a shipping method, and choose whether to send your order via WhatsApp or Email.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        {/* Left Column: All 3 Sections Fully Accessible Simultaneously */}
+        {/* Left Column: All Sections Accessible Simultaneously */}
         <div className="lg:col-span-8 space-y-6">
           
           {/* SECTION 1: Customer & Delivery Address */}
@@ -299,7 +291,7 @@ export const CartPage: React.FC<CartPageProps> = ({
                   1
                 </span>
                 <h2 className="font-black text-sm sm:text-base text-slate-900 uppercase tracking-wide">
-                  Customer & Delivery Address
+                  1. Delivery Details
                 </h2>
               </div>
               {profile && (
@@ -442,7 +434,7 @@ export const CartPage: React.FC<CartPageProps> = ({
                 2
               </span>
               <h2 className="font-black text-sm sm:text-base text-slate-900 uppercase tracking-wide">
-                Delivery Method (Kenya)
+                2. Delivery Method (Kenya)
               </h2>
             </div>
 
@@ -485,7 +477,7 @@ export const CartPage: React.FC<CartPageProps> = ({
             </div>
           </div>
 
-          {/* SECTION 3: Order Tailoring & Placement Channels (Accessible simultaneously) */}
+          {/* SECTION 3: Choose How to Send Your Order (WhatsApp vs Email) */}
           <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-5">
             <div className="flex items-center gap-2.5 pb-4 border-b border-slate-100">
               <span className="w-7 h-7 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs font-black">
@@ -493,65 +485,69 @@ export const CartPage: React.FC<CartPageProps> = ({
               </span>
               <div>
                 <h2 className="font-black text-sm sm:text-base text-slate-900 uppercase tracking-wide">
-                  Tailor & Place Your Order
+                  3. Send Your Order (WhatsApp or Email)
                 </h2>
                 <p className="text-xs text-slate-500">
-                  Connect directly with Deborah Marege to tailor packaging, timing, and confirm payment.
+                  Select your preferred channel below. Your full order breakdown and delivery details will be typed and ready to send instantly.
                 </p>
               </div>
             </div>
 
-            <div className="space-y-3 pt-2">
-              {/* WhatsApp Tailored Order Button (Primary) */}
-              <button
-                type="button"
-                onClick={handleWhatsAppOrder}
-                className="w-full py-4 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-lg shadow-emerald-600/25 flex items-center justify-center gap-2.5 transition-all active:scale-95"
-              >
-                <MessageCircle className="w-5 h-5" />
-                <span>Place & Tailor Order via WhatsApp (KES {grandTotal})</span>
-              </button>
-              <p className="text-[11px] text-center text-slate-500">
-                Recommended: Pre-fills your entire order ticket directly to Deborah ({CONTACT_INFO.phone}) on WhatsApp.
-              </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              
+              {/* Option A: Send via WhatsApp */}
+              <div className="p-5 rounded-2xl border-2 border-emerald-500/80 bg-emerald-50/30 flex flex-col justify-between space-y-4">
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center mb-3 shadow">
+                    <MessageCircle className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-bold text-sm text-slate-900">
+                    Option A: Order via WhatsApp
+                  </h3>
+                  <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                    Pre-types your entire itemized order and delivery address directly to Deborah ({CONTACT_INFO.phone}) on WhatsApp.
+                  </p>
+                </div>
 
-              <div className="relative text-center my-3">
-                <span className="text-[11px] font-bold text-slate-400 bg-white px-2 relative z-10">OTHER ORDER OPTIONS</span>
-                <div className="absolute top-1/2 left-0 right-0 border-t border-slate-200 -z-0" />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {/* Email Order Button */}
                 <button
                   type="button"
-                  onClick={handleEmailOrder}
-                  className="py-3.5 px-4 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-800 font-bold text-xs flex items-center justify-center gap-2 transition-colors active:scale-95"
+                  onClick={handleOrderViaWhatsApp}
+                  className="w-full py-4 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 transition-all active:scale-95"
                 >
-                  <Mail className="w-4 h-4 text-amber-600" />
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Send Order via WhatsApp</span>
+                </button>
+              </div>
+
+              {/* Option B: Send via Email */}
+              <div className="p-5 rounded-2xl border-2 border-slate-300 hover:border-slate-800 bg-slate-50/50 flex flex-col justify-between space-y-4 transition-colors">
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center mb-3 shadow">
+                    <Mail className="w-5 h-5 text-amber-400" />
+                  </div>
+                  <h3 className="font-bold text-sm text-slate-900">
+                    Option B: Order via Email
+                  </h3>
+                  <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                    Pre-types your entire order in your phone or laptop email app, ready to send to {CONTACT_INFO.email}.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleOrderViaEmail}
+                  className="w-full py-4 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 transition-all active:scale-95"
+                >
+                  <Mail className="w-4 h-4" />
                   <span>Send Order via Email</span>
                 </button>
-
-                {/* Instant M-Pesa STK Push */}
-                <button
-                  type="button"
-                  disabled={isProcessing}
-                  onClick={handleMpesaOrder}
-                  className="py-3.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-60"
-                >
-                  {isProcessing ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>Sending M-Pesa Prompt...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Pay via M-Pesa Prompt</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </>
-                  )}
-                </button>
               </div>
+
             </div>
+
+            <p className="text-[11px] text-center text-slate-400 pt-2">
+              All physical copies are hand-inspected at the Nairobi studio before courier dispatch.
+            </p>
           </div>
 
         </div>

@@ -16,7 +16,6 @@ export const Navbar: React.FC<NavbarProps> = ({ cartCount, profile, onOpenAccoun
     { to: '/', label: 'Home' },
     { to: '/books', label: 'All Books' },
     { to: '/wellness', label: 'Wellness Journal' },
-    { to: '/why-physical', label: 'Why Physical' },
     { to: '/about', label: 'About Us' },
     { to: '/contact', label: 'Contact' },
   ];
