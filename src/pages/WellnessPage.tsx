@@ -82,6 +82,8 @@ export const WellnessPage: React.FC<WellnessPageProps> = ({ onAddToCart, onPrevi
                 src={wellnessBook.coverImage} 
                 alt="ColourWhirl Wellness" 
                 className="w-full h-auto object-cover group-hover:scale-105 transition-transform" 
+                loading="eager"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 <span className="bg-white text-slate-900 text-xs font-bold px-4 py-2 rounded-full shadow flex items-center gap-1.5">

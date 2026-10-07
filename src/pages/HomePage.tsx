@@ -94,6 +94,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onAddToCart, onPreviewBook }
                     src={adultBook.coverImage} 
                     alt={adultBook.title} 
                     className="w-full h-auto object-cover group-hover:scale-105 transition-transform" 
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute top-3 left-3 bg-slate-900/90 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full">
                     Adults • KES 350
@@ -110,6 +112,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onAddToCart, onPreviewBook }
                     src={wellnessBook.coverImage} 
                     alt={wellnessBook.title} 
                     className="w-full h-auto object-cover" 
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute top-3 right-3 bg-rose-500 text-white text-[11px] font-extrabold px-3 py-1 rounded-full shadow">
                     KES 700

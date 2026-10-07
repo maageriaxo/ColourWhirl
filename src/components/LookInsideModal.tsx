@@ -98,6 +98,7 @@ export const LookInsideModal: React.FC<LookInsideModalProps> = ({
               alt={currentSample.title}
               key={currentSample.url}
               className="max-h-full max-w-full object-contain rounded-lg transition-opacity duration-200"
+              decoding="async"
             />
 
             {/* Left Prev Arrow */}
@@ -141,7 +142,13 @@ export const LookInsideModal: React.FC<LookInsideModalProps> = ({
                   }`}
                   title={`View ${item.title}`}
                 >
-                  <img src={item.url} alt={item.title} className="w-full h-full object-cover" />
+                  <img 
+                    src={item.url} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover" 
+                    loading="lazy" 
+                    decoding="async" 
+                  />
                 </button>
               ))}
             </div>

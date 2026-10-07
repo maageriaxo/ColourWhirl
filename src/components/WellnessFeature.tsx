@@ -87,6 +87,8 @@ export const WellnessFeature: React.FC<WellnessFeatureProps> = ({ onPreviewBook,
                 src={wellnessBook.coverImage}
                 alt="ColourWhirl Wellness Journal"
                 className="w-full h-auto object-cover"
+                loading="lazy"
+                decoding="async"
               />
               <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-slate-900/90 backdrop-blur-md border border-white/10 text-center">
                 <p className="text-xs font-serif italic text-amber-200">

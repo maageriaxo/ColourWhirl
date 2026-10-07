@@ -568,6 +568,8 @@ export const CartPage: React.FC<CartPageProps> = ({
                     src={item.book.coverImage}
                     alt={item.book.title}
                     className="w-12 h-16 object-cover rounded-lg book-shadow shrink-0"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="flex-1 min-w-0">
                     <h4 className="text-xs font-bold text-slate-900 truncate">

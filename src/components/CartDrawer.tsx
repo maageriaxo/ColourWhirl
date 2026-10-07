@@ -99,6 +99,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     src={item.book.coverImage}
                     alt={item.book.title}
                     className="w-16 h-20 object-cover rounded-lg book-shadow shrink-0"
+                    loading="lazy"
+                    decoding="async"
                   />
 
                   <div className="flex-1 min-w-0">

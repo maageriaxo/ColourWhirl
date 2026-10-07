@@ -101,12 +101,14 @@ export const Hero: React.FC<HeroProps> = ({ onScrollToCatalog, onPreviewBook }) 
               {/* Back Book 1 (Kids Book) */}
               <div 
                 onClick={() => onPreviewBook('kids-colour-me')}
-                className="absolute w-56 sm:w-64 rounded-xl overflow-hidden book-shadow transform -rotate-12 -translate-x-14 translate-y-6 hover:rotate-0 hover:z-30 transition-all cursor-pointer group"
+                className="absolute w-56 sm:w-64 rounded-xl overflow-hidden book-shadow transform -rotate-12 -translate-x-14 translate-y-6 hover:rotate-0 hover:z-30 transition-all cursor-pointer group bg-amber-50"
               >
                 <img 
                   src={kidsBook?.coverImage} 
                   alt="Kids Colour Me Physical Book" 
                   className="w-full h-auto object-cover group-hover:scale-105 transition-transform" 
+                  loading="eager"
+                  decoding="async"
                 />
                 <div className="absolute top-3 right-3 bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded-full shadow">
                   KES 300
@@ -116,12 +118,14 @@ export const Hero: React.FC<HeroProps> = ({ onScrollToCatalog, onPreviewBook }) 
               {/* Back Book 2 (Travel & Tranquil) */}
               <div 
                 onClick={() => onPreviewBook('travel-and-tranquil')}
-                className="absolute w-56 sm:w-64 rounded-xl overflow-hidden book-shadow transform rotate-12 translate-x-14 translate-y-4 hover:rotate-0 hover:z-30 transition-all cursor-pointer group"
+                className="absolute w-56 sm:w-64 rounded-xl overflow-hidden book-shadow transform rotate-12 translate-x-14 translate-y-4 hover:rotate-0 hover:z-30 transition-all cursor-pointer group bg-sky-50"
               >
                 <img 
                   src={travelBook?.coverImage} 
                   alt="Travel and Tranquil Physical Book" 
                   className="w-full h-auto object-cover group-hover:scale-105 transition-transform" 
+                  loading="eager"
+                  decoding="async"
                 />
                 <div className="absolute top-3 right-3 bg-sky-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow">
                   KES 350
@@ -131,12 +135,15 @@ export const Hero: React.FC<HeroProps> = ({ onScrollToCatalog, onPreviewBook }) 
               {/* Front Hero Book (ColourWhirl Wellness) */}
               <div 
                 onClick={() => onPreviewBook('colourwhirl-wellness')}
-                className="relative z-20 w-64 sm:w-72 rounded-2xl overflow-hidden book-shadow transform hover:scale-105 transition-all cursor-pointer group border-2 border-white/60"
+                className="relative z-20 w-64 sm:w-72 rounded-2xl overflow-hidden book-shadow transform hover:scale-105 transition-all cursor-pointer group border-2 border-white/60 bg-rose-50"
               >
                 <img 
                   src={wellnessBook?.coverImage} 
                   alt="ColourWhirl Wellness Physical Journal" 
                   className="w-full h-auto object-cover" 
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
                 />
                 <div className="absolute top-4 left-4 bg-rose-500 text-white text-xs font-black px-3 py-1 rounded-full shadow-lg">
                   ⭐ Bestseller

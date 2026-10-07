@@ -102,6 +102,8 @@ export const BooksPage: React.FC<BooksPageProps> = ({ onAddToCart, onPreviewBook
                     src={book.coverImage}
                     alt={book.title}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <span className="bg-white text-slate-900 text-xs font-bold px-3 py-1.5 rounded-full shadow flex items-center gap-1.5">
