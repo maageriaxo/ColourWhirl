@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="fav-orange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF9E00" />
+      <stop offset="100%" stop-color="#FF5400" />
+    </linearGradient>
+    <linearGradient id="fav-pink" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF3399" />
+      <stop offset="100%" stop-color="#E60067" />
+    </linearGradient>
+    <linearGradient id="fav-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5FF" />
+      <stop offset="100%" stop-color="#0088FF" />
+    </linearGradient>
+    <linearGradient id="fav-green" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#99FF33" />
+      <stop offset="100%" stop-color="#38B000" />
+    </linearGradient>
+    <linearGradient id="fav-yellow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFEE33" />
+      <stop offset="100%" stop-color="#FFAA00" />
+    </linearGradient>
+    <linearGradient id="fav-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B5179E" />
+      <stop offset="100%" stop-color="#7209B7" />
+    </linearGradient>
+  </defs>
+
+  <!-- Circular subtle white glow backdrop to guarantee contrast on dark tabs -->
+  <circle cx="32" cy="32" r="30" fill="#FFFFFF" fill-opacity="0.95" />
+
+  <!-- 6 Swirling Pinwheel Petals -->
+  <g transform="translate(32, 32)">
+    <!-- 0 deg: Orange -->
+    <path d="M 0,-26 C 10,-26 22,-18 22,-7 C 22,5 10,2 0,0 C -4,-10 -4,-20 0,-26 Z" fill="url(#fav-orange)" />
+    <!-- 60 deg: Pink -->
+    <g transform="rotate(60)">
+      <path d="M 0,-26 C 10,-26 22,-18 22,-7 C 22,5 10,2 0,0 C -4,-10 -4,-20 0,-26 Z" fill="url(#fav-pink)" />
+    </g>
+    <!-- 120 deg: Cyan -->
+    <g transform="rotate(120)">
+      <path d="M 0,-26 C 10,-26 22,-18 22,-7 C 22,5 10,2 0,0 C -4,-10 -4,-20 0,-26 Z" fill="url(#fav-cyan)" />
+    </g>
+    <!-- 180 deg: Lime Green -->
+    <g transform="rotate(180)">
+      <path d="M 0,-26 C 10,-26 22,-18 22,-7 C 22,5 10,2 0,0 C -4,-10 -4,-20 0,-26 Z" fill="url(#fav-green)" />
+    </g>
+    <!-- 240 deg: Sunny Yellow -->
+    <g transform="rotate(240)">
+      <path d="M 0,-26 C 10,-26 22,-18 22,-7 C 22,5 10,2 0,0 C -4,-10 -4,-20 0,-26 Z" fill="url(#fav-yellow)" />
+    </g>
+    <!-- 300 deg: Vivid Purple -->
+    <g transform="rotate(300)">
+      <path d="M 0,-26 C 10,-26 22,-18 22,-7 C 22,5 10,2 0,0 C -4,-10 -4,-20 0,-26 Z" fill="url(#fav-purple)" />
+    </g>
+    <!-- Center Core -->
+    <circle cx="0" cy="0" r="4.5" fill="#FFFFFF" />
+  </g>
+</svg>
