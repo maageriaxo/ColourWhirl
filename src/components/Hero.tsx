@@ -8,6 +8,10 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onScrollToCatalog, onPreviewBook }) => {
+  const kidsBook = BOOKS.find(b => b.id === 'kids-colour-me');
+  const travelBook = BOOKS.find(b => b.id === 'travel-and-tranquil');
+  const wellnessBook = BOOKS.find(b => b.id === 'colourwhirl-wellness');
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-amber-50/60 via-[#FAF8F5] to-[#FAF8F5] pt-10 pb-20 lg:pt-16 lg:pb-28">
       {/* Decorative Blur Backgrounds */}
@@ -100,7 +104,7 @@ export const Hero: React.FC<HeroProps> = ({ onScrollToCatalog, onPreviewBook }) 
                 className="absolute w-56 sm:w-64 rounded-xl overflow-hidden book-shadow transform -rotate-12 -translate-x-14 translate-y-6 hover:rotate-0 hover:z-30 transition-all cursor-pointer group"
               >
                 <img 
-                  src="/images/kids_colouring_books/page_1.jpg" 
+                  src={kidsBook?.coverImage} 
                   alt="Kids Colour Me Physical Book" 
                   className="w-full h-auto object-cover group-hover:scale-105 transition-transform" 
                 />
@@ -115,7 +119,7 @@ export const Hero: React.FC<HeroProps> = ({ onScrollToCatalog, onPreviewBook }) 
                 className="absolute w-56 sm:w-64 rounded-xl overflow-hidden book-shadow transform rotate-12 translate-x-14 translate-y-4 hover:rotate-0 hover:z-30 transition-all cursor-pointer group"
               >
                 <img 
-                  src="/images/travel___tranquil/page_1.jpg" 
+                  src={travelBook?.coverImage} 
                   alt="Travel and Tranquil Physical Book" 
                   className="w-full h-auto object-cover group-hover:scale-105 transition-transform" 
                 />
@@ -130,7 +134,7 @@ export const Hero: React.FC<HeroProps> = ({ onScrollToCatalog, onPreviewBook }) 
                 className="relative z-20 w-64 sm:w-72 rounded-2xl overflow-hidden book-shadow transform hover:scale-105 transition-all cursor-pointer group border-2 border-white/60"
               >
                 <img 
-                  src="/images/colouewhirl_wellness/page_1.jpg" 
+                  src={wellnessBook?.coverImage} 
                   alt="ColourWhirl Wellness Physical Journal" 
                   className="w-full h-auto object-cover" 
                 />
