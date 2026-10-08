@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { ShoppingBag, User, Menu, X } from 'lucide-react';
 import { CustomerProfile } from './AccountModal';
-import { getAssetUrl } from '../utils/assets';
 
 interface NavbarProps {
   cartCount: number;
@@ -29,7 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({ cartCount, profile, onOpenAccoun
           {/* Logo with high resolution */}
           <Link to="/" className="flex items-center gap-2 group py-2">
             <img 
-              src={getAssetUrl('/logo.svg')} 
+              src="/logo.svg" 
               alt="ColourWhirl — Whirl your World" 
               className="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-[1.02]" 
             />

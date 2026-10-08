@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { LookInsideModal } from './components/LookInsideModal';
@@ -115,7 +115,7 @@ export const App: React.FC = () => {
   const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <HashRouter>
+    <BrowserRouter>
       <ScrollToTop />
       <div className="min-h-screen flex flex-col bg-[#FAF8F5]">
         
@@ -216,7 +216,7 @@ export const App: React.FC = () => {
         />
 
       </div>
-    </HashRouter>
+    </BrowserRouter>
   );
 };
 

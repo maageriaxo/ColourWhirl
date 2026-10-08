@@ -1,7 +1,6 @@
 import { Book, DeliveryOption } from '../types';
-import { getAssetUrl } from '../utils/assets';
 
-const RAW_BOOKS: Book[] = [
+export const BOOKS: Book[] = [
   {
     id: 'travel-and-tranquil',
     title: 'Adults Colouring Book — Travel & Tranquil',
@@ -233,15 +232,6 @@ const RAW_BOOKS: Book[] = [
     badge: 'Preschool Essential'
   }
 ];
-
-export const BOOKS: Book[] = RAW_BOOKS.map(b => ({
-  ...b,
-  coverImage: getAssetUrl(b.coverImage),
-  sampleImages: b.sampleImages.map(s => ({
-    ...s,
-    url: getAssetUrl(s.url)
-  }))
-}));
 
 export const DELIVERY_OPTIONS: DeliveryOption[] = [
   {

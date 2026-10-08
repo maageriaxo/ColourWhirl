@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { CONTACT_INFO } from '../data/books';
 import { Heart, Phone, Mail, MapPin } from 'lucide-react';
-import { getAssetUrl } from '../utils/assets';
 
 export const Footer: React.FC = () => {
   return (
@@ -14,7 +13,7 @@ export const Footer: React.FC = () => {
           {/* Brand Info */}
           <div className="space-y-4 md:col-span-2">
             <Link to="/" className="inline-block">
-              <img src={getAssetUrl('/logo.svg')} alt="ColourWhirl" className="h-10 w-auto bg-white/10 p-1 rounded-xl" />
+              <img src="/logo.svg" alt="ColourWhirl" className="h-10 w-auto bg-white/10 p-1 rounded-xl" />
             </Link>
             <p className="text-slate-400 max-w-sm leading-relaxed">
               Curated physical colouring books, therapeutic journals, and early educational prints. Bringing peace, mindfulness, and creative joy to hearts and homes across Kenya.
