@@ -2,11 +2,12 @@ export interface Book {
   id: string;
   title: string;
   subtitle: string;
-  category: 'wellness' | 'adult' | 'kids';
+  category: 'wellness' | 'adult' | 'kids' | 'supplies';
   categoryLabel: string;
   price: number; // in KES
   originalPrice?: number;
-  pages: number;
+  pages?: number;
+  productType?: 'book' | 'accessory';
   description: string;
   coverImage: string;
   sampleImages: {

@@ -49,6 +49,7 @@ export const BookCatalog: React.FC<BookCatalogProps> = ({
             { id: 'wellness', label: 'Mindfulness & Journaling' },
             { id: 'adult', label: 'Adult Scenic Travel' },
             { id: 'kids', label: 'Kids & Early Learning' },
+            { id: 'supplies', label: '✏️ Colouring Pencils' },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -84,7 +85,7 @@ export const BookCatalog: React.FC<BookCatalogProps> = ({
                 )}
 
                 <span className="absolute top-4 right-4 z-10 bg-slate-900/80 backdrop-blur-sm text-white text-[11px] font-semibold px-2.5 py-1 rounded-full">
-                  {book.pages} Pages
+                  {book.category === 'supplies' ? '12 Colours' : `${book.pages} Pages`}
                 </span>
 
                 <div 
@@ -101,7 +102,7 @@ export const BookCatalog: React.FC<BookCatalogProps> = ({
                   <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <span className="bg-white/95 text-slate-900 text-xs font-bold px-3 py-1.5 rounded-full shadow flex items-center gap-1.5">
                       <Eye className="w-3.5 h-3.5 text-rose-500" />
-                      Look Inside
+                      {book.category === 'supplies' ? 'View Details' : 'Look Inside'}
                     </span>
                   </div>
                 </div>
@@ -156,7 +157,7 @@ export const BookCatalog: React.FC<BookCatalogProps> = ({
                       className="px-3 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold transition-all flex items-center justify-center gap-1.5"
                     >
                       <Eye className="w-3.5 h-3.5 text-slate-500" />
-                      <span>Look Inside</span>
+                      <span>{book.category === 'supplies' ? 'Details' : 'Look Inside'}</span>
                     </button>
 
                     <button
@@ -209,7 +210,7 @@ export const BookCatalog: React.FC<BookCatalogProps> = ({
         </div>
         <button
           onClick={() => {
-            BOOKS.forEach(b => onAddToCart(b));
+            BOOKS.filter(b => b.category !== 'supplies').forEach(b => onAddToCart(b));
           }}
           className="shrink-0 px-6 py-3 rounded-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs sm:text-sm shadow hover:shadow-md transition-all active:scale-95"
         >

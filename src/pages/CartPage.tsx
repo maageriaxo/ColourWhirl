@@ -5,8 +5,8 @@ import {
   ShieldCheck, CheckCircle2, MapPin, Mail, MessageCircle 
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { CartItem, SavedOrder } from '../types';
-import { DELIVERY_OPTIONS, CONTACT_INFO } from '../data/books';
+import { CartItem, SavedOrder, Book } from '../types';
+import { DELIVERY_OPTIONS, CONTACT_INFO, BOOKS } from '../data/books';
 import { saveNewOrder } from '../utils/orderStorage';
 import { CustomerProfile } from '../components/AccountModal';
 
@@ -16,6 +16,7 @@ interface CartPageProps {
   onUpdateQuantity: (bookId: string, delta: number) => void;
   onRemoveItem: (bookId: string) => void;
   onClearCart: () => void;
+  onAddToCart?: (book: Book) => void;
 }
 
 export const CartPage: React.FC<CartPageProps> = ({
@@ -23,7 +24,8 @@ export const CartPage: React.FC<CartPageProps> = ({
   profile,
   onUpdateQuantity,
   onRemoveItem,
-  onClearCart
+  onClearCart,
+  onAddToCart
 }) => {
   // Address Inputs (clean labels without dummy names)
   const [firstName, setFirstName] = useState('');
@@ -121,7 +123,7 @@ export const CartPage: React.FC<CartPageProps> = ({
     if (email.trim()) msg += `*Email:* ${email.trim()}%0A`;
     msg += `*Delivery Address:* ${order.customer.address}%0A`;
     msg += `*Delivery Service:* ${selectedDelivery.name} (KES ${deliveryFee})%0A%0A`;
-    msg += `*Books Ordered:*%0A`;
+    msg += `*Items Ordered:*%0A`;
     items.forEach((item, idx) => {
       msg += `${idx + 1}. *${item.book.title}* x ${item.quantity} = KES ${item.book.price * item.quantity}%0A`;
     });
@@ -154,7 +156,7 @@ export const CartPage: React.FC<CartPageProps> = ({
     if (email.trim()) body += `EMAIL: ${email.trim()}\n`;
     body += `DELIVERY ADDRESS: ${order.customer.address}\n`;
     body += `DELIVERY SERVICE: ${selectedDelivery.name} (KES ${deliveryFee})\n\n`;
-    body += `BOOKS ORDERED:\n`;
+    body += `ITEMS ORDERED:\n`;
     items.forEach((item, idx) => {
       body += `${idx + 1}. ${item.book.title} x ${item.quantity} = KES ${item.book.price * item.quantity}\n`;
     });
@@ -576,7 +578,7 @@ export const CartPage: React.FC<CartPageProps> = ({
                       {item.book.title}
                     </h4>
                     <span className="text-[11px] text-slate-400 block">
-                      {item.book.pages} pgs • KES {item.book.price} each
+                      {item.book.category === 'supplies' ? '12 Colours • ' : `${item.book.pages} pgs • `}KES {item.book.price} each
                     </span>
                     <span className="text-xs font-black text-slate-900 mt-0.5 block">
                       KES {item.book.price * item.quantity}
@@ -611,6 +613,46 @@ export const CartPage: React.FC<CartPageProps> = ({
                 </div>
               ))}
             </div>
+
+            {/* Quick Add-On for Colouring Pencils */}
+            {onAddToCart && !items.some(i => i.book.category === 'supplies') && (
+              <div className="pt-3 border-t border-slate-100">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800 mb-2">
+                  <span>✏️</span>
+                  <span>Add Colouring Pencils to Order:</span>
+                </div>
+                <div className="space-y-2">
+                  {BOOKS.filter(b => b.category === 'supplies').map((pencil) => (
+                    <div 
+                      key={pencil.id}
+                      className="p-2.5 rounded-xl border border-slate-200 bg-slate-50/70 hover:bg-slate-50 flex items-center justify-between gap-2.5 transition-colors"
+                    >
+                      <img 
+                        src={pencil.coverImage} 
+                        alt={pencil.title} 
+                        className="w-9 h-11 object-cover rounded-md shadow-xs shrink-0" 
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[11px] font-bold text-slate-900 truncate">
+                          {pencil.title}
+                        </p>
+                        <span className="text-[11px] font-black text-rose-600 block">
+                          KES {pencil.price}
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => onAddToCart(pencil)}
+                        className="px-2.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-[11px] font-bold shadow-xs transition-transform active:scale-95 shrink-0 flex items-center gap-1"
+                      >
+                        <Plus className="w-3 h-3" />
+                        <span>Add</span>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Cost Breakdown */}
             <div className="space-y-2 pt-3 border-t border-slate-100 text-xs">

@@ -84,10 +84,10 @@ export const LookInsideModal: React.FC<LookInsideModalProps> = ({
           <div className="flex items-center justify-between pb-3 border-b border-slate-200/70 text-xs">
             <span className="font-bold text-slate-700 flex items-center gap-1.5">
               <BookOpen className="w-4 h-4 text-rose-500" />
-              <span>Looking Inside: {book.title}</span>
+              <span>{book.category === 'supplies' ? `Product View: ${book.title}` : `Looking Inside: ${book.title}`}</span>
             </span>
             <span className="bg-slate-200 text-slate-800 font-extrabold px-2.5 py-0.5 rounded-full text-[11px]">
-              Sample Spread {safeIndex + 1} of {totalPages}
+              {book.category === 'supplies' ? 'Art Supplies' : `Sample Spread ${safeIndex + 1} of ${totalPages}`}
             </span>
           </div>
 
@@ -102,22 +102,26 @@ export const LookInsideModal: React.FC<LookInsideModalProps> = ({
             />
 
             {/* Left Prev Arrow */}
-            <button
-              onClick={handlePrev}
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/95 hover:bg-white text-slate-900 shadow-xl border border-slate-200 flex items-center justify-center transition-transform hover:scale-110 active:scale-95"
-              title="Previous sample page (Left Arrow)"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
+            {totalPages > 1 && (
+              <button
+                onClick={handlePrev}
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/95 hover:bg-white text-slate-900 shadow-xl border border-slate-200 flex items-center justify-center transition-transform hover:scale-110 active:scale-95"
+                title="Previous sample page (Left Arrow)"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+            )}
 
             {/* Right Next Arrow */}
-            <button
-              onClick={handleNext}
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/95 hover:bg-white text-slate-900 shadow-xl border border-slate-200 flex items-center justify-center transition-transform hover:scale-110 active:scale-95"
-              title="Next sample page (Right Arrow)"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
+            {totalPages > 1 && (
+              <button
+                onClick={handleNext}
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/95 hover:bg-white text-slate-900 shadow-xl border border-slate-200 flex items-center justify-center transition-transform hover:scale-110 active:scale-95"
+                title="Next sample page (Right Arrow)"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            )}
           </div>
 
           {/* Caption & Thumbnails */}
@@ -130,28 +134,30 @@ export const LookInsideModal: React.FC<LookInsideModalProps> = ({
             </div>
 
             {/* Thumbnail Strip */}
-            <div className="flex items-center justify-center gap-2 overflow-x-auto py-1">
-              {samples.map((item, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentPage(idx)}
-                  className={`w-12 h-14 rounded-lg overflow-hidden border-2 transition-all shrink-0 ${
-                    safeIndex === idx
-                      ? 'border-rose-500 ring-2 ring-rose-300 scale-105'
-                      : 'border-slate-300 opacity-60 hover:opacity-100 hover:border-slate-400'
-                  }`}
-                  title={`View ${item.title}`}
-                >
-                  <img 
-                    src={item.url} 
-                    alt={item.title} 
-                    className="w-full h-full object-cover" 
-                    loading="lazy" 
-                    decoding="async" 
-                  />
-                </button>
-              ))}
-            </div>
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 overflow-x-auto py-1">
+                {samples.map((item, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentPage(idx)}
+                    className={`w-12 h-14 rounded-lg overflow-hidden border-2 transition-all shrink-0 ${
+                      safeIndex === idx
+                        ? 'border-rose-500 ring-2 ring-rose-300 scale-105'
+                        : 'border-slate-300 opacity-60 hover:opacity-100 hover:border-slate-400'
+                    }`}
+                    title={`View ${item.title}`}
+                  >
+                    <img 
+                      src={item.url} 
+                      alt={item.title} 
+                      className="w-full h-full object-cover" 
+                      loading="lazy" 
+                      decoding="async" 
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
@@ -179,7 +185,7 @@ export const LookInsideModal: React.FC<LookInsideModalProps> = ({
                 </span>
               )}
               <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
-                Physical Paperback
+                {book.category === 'supplies' ? 'In Stock • Ready to Dispatch' : 'Physical Paperback'}
               </span>
             </div>
 
@@ -187,20 +193,29 @@ export const LookInsideModal: React.FC<LookInsideModalProps> = ({
               {book.description}
             </p>
 
-            {/* Physical Specs */}
+            {/* Specifications */}
             <div className="mt-5 space-y-2 pt-4 border-t border-slate-100 text-xs">
-              <div className="font-bold text-slate-900 mb-1">Book Specifications:</div>
+              <div className="font-bold text-slate-900 mb-1">
+                {book.category === 'supplies' ? 'Product Specifications:' : 'Book Specifications:'}
+              </div>
               <div className="flex items-start gap-2 text-slate-600">
                 <Layers className="w-4 h-4 text-violet-600 shrink-0 mt-0.5" />
-                <span><strong>Total Pages:</strong> {book.pages} physical pages</span>
+                <span>
+                  <strong>{book.category === 'supplies' ? 'Contents:' : 'Total Pages:'}</strong>{' '}
+                  {book.category === 'supplies' ? '12 Pre-Sharpened Pencils' : `${book.pages} physical pages`}
+                </span>
               </div>
               <div className="flex items-start gap-2 text-slate-600">
                 <Layers className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                <span><strong>Paper:</strong> {book.paperSpec}</span>
+                <span>
+                  <strong>{book.category === 'supplies' ? 'Quality:' : 'Paper:'}</strong> {book.paperSpec}
+                </span>
               </div>
               <div className="flex items-start gap-2 text-slate-600">
                 <Layers className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                <span><strong>Format:</strong> {book.dimensions}</span>
+                <span>
+                  <strong>{book.category === 'supplies' ? 'Packaging:' : 'Format:'}</strong> {book.dimensions}
+                </span>
               </div>
             </div>
 
@@ -231,7 +246,11 @@ export const LookInsideModal: React.FC<LookInsideModalProps> = ({
               ) : (
                 <>
                   <ShoppingBag className="w-4 h-4 text-amber-400" />
-                  <span>Add Physical Copy to Bag (KES {book.price})</span>
+                  <span>
+                    {book.category === 'supplies'
+                      ? `Add to Bag (KES ${book.price})`
+                      : `Add Physical Copy to Bag (KES ${book.price})`}
+                  </span>
                 </>
               )}
             </button>

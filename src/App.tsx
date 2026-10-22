@@ -177,6 +177,7 @@ export const App: React.FC = () => {
                   onUpdateQuantity={handleUpdateQuantity} 
                   onRemoveItem={handleRemoveItem} 
                   onClearCart={handleClearCart} 
+                  onAddToCart={handleAddToCart}
                 />
               } 
             />

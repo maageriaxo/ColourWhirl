@@ -42,6 +42,7 @@ export const BooksPage: React.FC<BooksPageProps> = ({ onAddToCart, onPreviewBook
   const adultBooks = BOOKS.filter(b => b.category === 'adult');
   const wellnessBooks = BOOKS.filter(b => b.category === 'wellness');
   const kidsBooks = BOOKS.filter(b => b.category === 'kids');
+  const suppliesItems = BOOKS.filter(b => b.category === 'supplies');
 
   return (
     <div className="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
@@ -50,22 +51,23 @@ export const BooksPage: React.FC<BooksPageProps> = ({ onAddToCart, onPreviewBook
       <div className="text-center max-w-3xl mx-auto">
         <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-rose-50 text-rose-700 text-xs font-bold mb-4 border border-rose-100">
           <Sparkles className="w-3.5 h-3.5 text-rose-500" />
-          <span>Physical Paperback Catalog</span>
+          <span>Physical Store & Supplies</span>
         </div>
         <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-          Available Books Collection
+          Books & Art Supplies Collection
         </h1>
         <p className="mt-3 text-slate-600 text-base sm:text-lg">
-          Printed in Nairobi on thick bleed-proof artist stock. Choose from adults stress-relief coloring, therapeutic guided journals, and kids activity books.
+          Printed in Nairobi on thick bleed-proof artist stock, paired with premium M&G colouring pencils for the ultimate creative experience.
         </p>
 
         {/* Category Filter Pills */}
         <div className="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           {[
-            { id: 'all', label: `All Books (${BOOKS.length})` },
-            { id: 'adult', label: `🌿 Adults Colouring Books (${adultBooks.length})` },
+            { id: 'all', label: `All Collections (${BOOKS.length})` },
+            { id: 'adult', label: `🌿 Adults Colouring (${adultBooks.length})` },
             { id: 'wellness', label: `🧘 Wellness Journals (${wellnessBooks.length})` },
-            { id: 'kids', label: `🎨 Kids Activity Books (${kidsBooks.length})` },
+            { id: 'kids', label: `🎨 Kids Activity (${kidsBooks.length})` },
+            { id: 'supplies', label: `✏️ Colouring Pencils (${suppliesItems.length})` },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -108,7 +110,7 @@ export const BooksPage: React.FC<BooksPageProps> = ({ onAddToCart, onPreviewBook
                   <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <span className="bg-white text-slate-900 text-xs font-bold px-3 py-1.5 rounded-full shadow flex items-center gap-1.5">
                       <BookOpen className="w-3.5 h-3.5 text-rose-500" />
-                      Look Inside
+                      {book.category === 'supplies' ? 'View Details' : 'Look Inside'}
                     </span>
                   </div>
                 </div>
@@ -118,7 +120,7 @@ export const BooksPage: React.FC<BooksPageProps> = ({ onAddToCart, onPreviewBook
                   className="mt-4 w-full py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold transition-all flex items-center justify-center gap-1.5"
                 >
                   <Eye className="w-4 h-4 text-violet-600" />
-                  <span>Peek Inside ({book.sampleImages.length} Samples)</span>
+                  <span>{book.category === 'supplies' ? 'View Product Details' : `Peek Inside (${book.sampleImages.length} Samples)`}</span>
                 </button>
               </div>
 
@@ -130,7 +132,7 @@ export const BooksPage: React.FC<BooksPageProps> = ({ onAddToCart, onPreviewBook
                       {book.categoryLabel}
                     </span>
                     <span className="bg-slate-100 text-slate-700 text-[11px] font-bold px-2.5 py-0.5 rounded-full">
-                      {book.pages} Pages
+                      {book.category === 'supplies' ? '12 Colours' : `${book.pages} Pages`}
                     </span>
                   </div>
 

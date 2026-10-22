@@ -230,6 +230,66 @@ export const BOOKS: Book[] = [
     paperSpec: '100gsm crisp white drawing bond paper',
     dimensions: 'A4 format (21.0 x 29.7 cm), Physical Paperback',
     badge: 'Preschool Essential'
+  },
+  {
+    id: 'mg-12-color-pencils-tube',
+    title: 'M&G 12 Color Pencils in Travel Tube',
+    subtitle: 'Portable Canister with Built-in Sharpener Cap (AWP34363)',
+    category: 'supplies',
+    categoryLabel: 'Colouring Pencils & Supplies',
+    price: 250,
+    originalPrice: 300,
+    pages: 0,
+    productType: 'accessory',
+    description: 'A premium 12-pack of pre-sharpened coloured pencils housed in a durable travel tube with a built-in sharpener in the lid. Features non-slip hexagonal wooden barrels that will not roll off tables, vibrant pigment saturation, and break-resistant lead. The ultimate companion for ColourWhirl colouring books on the move.',
+    coverImage: '/images/pencils/mg-12-color-pencils-tube.jpg',
+    sampleImages: [
+      {
+        url: '/images/pencils/mg-12-color-pencils-tube.jpg',
+        title: 'M&G 12 Color Pencils Canister',
+        description: 'Vibrant hexagonal colored pencils in a protective tube with transparent sharpener cap.'
+      }
+    ],
+    features: [
+      '12 rich, pre-sharpened vibrant shades with smooth laydown',
+      'Protective clear cylinder cap with integrated pencil sharpener',
+      'Ergonomic hexagonal shape prevents rolling off desks',
+      'Non-toxic, kid-safe and artist-grade pigment cores',
+      'Compact, durable travel canister fits easily into bags'
+    ],
+    paperSpec: 'Non-toxic break-resistant core (pencil friendly)',
+    dimensions: 'Cylindrical travel canister with built-in sharpener',
+    badge: 'Popular Add-On'
+  },
+  {
+    id: 'mg-12-colour-pencils-box',
+    title: 'M&G 12 Colour Pencils Classic Pack',
+    subtitle: '12 Smooth Vibrant Shades for Creative Colouring (AWP343D3)',
+    category: 'supplies',
+    categoryLabel: 'Colouring Pencils & Supplies',
+    price: 200,
+    originalPrice: 250,
+    pages: 0,
+    productType: 'accessory',
+    description: 'Classic 12-pack of smooth, rich colouring pencils by M&G. Formulated for soft laydown, smooth blending, and high break resistance. Perfect for children, students, and adults enjoying ColourWhirl colouring pages, guided wellness journals, and mindful art therapy.',
+    coverImage: '/images/pencils/mg-12-colour-pencils-box.jpg',
+    sampleImages: [
+      {
+        url: '/images/pencils/mg-12-colour-pencils-box.jpg',
+        title: 'M&G 12 Colour Pencils Classic Pack',
+        description: '12 smooth, vibrant shades in a slim protective cardboard case.'
+      }
+    ],
+    features: [
+      '12 vibrant classic shades ideal for shading, detailing, and blending',
+      'Break-resistant high-density lead core for longer pencil life',
+      'Easy to sharpen with standard desk or handheld sharpeners',
+      'Safe and non-toxic for both kids and adults',
+      'Slim lightweight packaging perfect for backpacks and desks'
+    ],
+    paperSpec: 'Non-toxic break-resistant core (pencil friendly)',
+    dimensions: 'Standard slim protective box pack',
+    badge: 'Best Value'
   }
 ];
 
