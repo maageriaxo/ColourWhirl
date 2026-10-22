@@ -10,55 +10,55 @@ export const BOOKS: Book[] = [
     price: 350,
     originalPrice: 450,
     pages: 40,
-    description: 'Designed specifically for adults seeking stress relief, creative decompression, and mindful escape. Journey through 40 intricately drawn world destinations—including the Nairobi city skyline, Paris sidewalk cafes, the Pyramids of Egypt, Tokyo pagodas, Rome Colosseum, Taj Mahal, and peaceful garden waterfalls.',
+    description: 'Designed specifically for adults seeking stress relief, creative decompression, and mindful escape. Journey through 40 intricately drawn peaceful landscapes—including cascading mountain waterfalls, tranquil garden gazebos, tropical seaside terraces, African savanna wildlife, and blooming wildflower meadows.',
     coverImage: '/images/travel___tranquil/page_1.jpg',
     sampleImages: [
       {
         url: '/images/travel___tranquil/page_5.jpg',
-        title: 'Nairobi Skyline, Kenya',
-        description: 'Iconic Nairobi landmarks including KICC, Times Tower, and lush Uhuru park greenery.'
+        title: 'Tranquil Garden Gazebo & Waterfall',
+        description: 'Victorian garden pavilion with hanging floral planters beside a cascading tiered waterfall and stream.'
       },
       {
         url: '/images/travel___tranquil/page_7.jpg',
-        title: 'New York City & Statue of Liberty',
-        description: 'Detailed harbor vista with Manhattan skyline and ferries.'
+        title: 'Sunset Beach Resort & Infinity Pool',
+        description: 'Oceanfront terrace with loungers, tropical palms, and sunset reflecting over the horizon.'
       },
       {
         url: '/images/travel___tranquil/page_9.jpg',
-        title: 'Paris, France',
-        description: 'Classic Parisian street cafe terrace with the Eiffel Tower rising in the background.'
+        title: 'Mountain Cascades & Wooded Gorge',
+        description: 'Majestic multi-tiered waterfalls tumbling over mountain rocks into a calm river pool.'
       },
       {
         url: '/images/travel___tranquil/page_11.jpg',
-        title: 'Tokyo Pagoda, Japan',
-        description: 'Historic Sensō-ji temple style pagoda paired with the Tokyo Skytree.'
+        title: 'African Savanna Lion Family',
+        description: 'Serene pride of lions resting under an acacia tree beneath a starry night and full moon.'
       },
       {
         url: '/images/travel___tranquil/page_15.jpg',
-        title: 'The Colosseum, Rome Italy',
-        description: 'Ancient Roman stonework and olive tree in deep meditative line art.'
+        title: 'Seaside Cafe Terrace & Sleeping Cat',
+        description: 'Peaceful oceanfront cafe deck with umbrella tables, lanterns, distant lighthouse, and resting cat.'
       },
       {
         url: '/images/travel___tranquil/page_17.jpg',
-        title: 'Great Pyramids & Sphinx, Egypt',
-        description: 'Majestic desert horizon with ancient pyramids and desert caravan.'
+        title: 'Hanging Floral Baskets & Petunias',
+        description: 'Intricate hanging wicker planters bursting with petunias, daisies, and trailing ivy vines.'
       },
       {
         url: '/images/travel___tranquil/page_27.jpg',
-        title: 'Taj Mahal, Agra India',
-        description: 'Reflective marble pools and symmetric domes designed for color immersion.'
+        title: 'Tropical Countryside Farm & Stream',
+        description: 'Clear irrigation canal with swimming fish, papaya grove, vegetable plots, and rustic thatched cottage.'
       },
       {
         url: '/images/travel___tranquil/page_31.jpg',
-        title: 'Golden Gate Bridge, San Francisco',
-        description: 'Towering suspension bridge over the Pacific bay with sailboats.'
+        title: 'Old Oak Tree Swing & Wildflower Meadow',
+        description: 'Shaded tree swing overlooking gentle rolling hills, stepping stones, and blooming tulip gardens.'
       }
     ],
     features: [
-      '40 pages of adult-level intricate scenic landscapes & cultural wonders',
+      '40 pages of adult-level intricate scenic landscapes & tranquil retreats',
       'Proven therapeutic stress relief for busy professionals and creatives',
       'Single-sided backings so ink or pressure never ruins the next illustration',
-      'Featuring Nairobi, Paris, Tokyo, New York, Egypt, India, and tranquil gardens',
+      'Featuring serene garden gazebos, oceanfront retreats, African wildlife, mountain waterfalls, and tranquil country landscapes',
       'Handy A4 format with durable softcover binding'
     ],
     paperSpec: '120gsm high-opacity bright white sketch stock (pencil, pen & fine-liner friendly)',
@@ -89,8 +89,8 @@ export const BOOKS: Book[] = [
       },
       {
         url: '/images/colouewhirl_wellness/page_11.jpg',
-        title: 'Inner Magic & Water Lilies',
-        description: 'Serene pond fairy floating among blooming lotus flowers, koi fish, and sunlight.'
+        title: 'African Heritage & Core Identity',
+        description: 'Dignified portrait celebrating cultural roots, beaded adornments, and homeland skies.'
       },
       {
         url: '/images/colouewhirl_wellness/page_12.jpg',
@@ -99,13 +99,13 @@ export const BOOKS: Book[] = [
       },
       {
         url: '/images/colouewhirl_wellness/page_16.jpg',
-        title: 'Cozy Sanctuary & Hearth',
-        description: 'Fireplace nook with sleeping cat, warm tea, knitted throws, and cozy books.'
+        title: 'Spirituality & Reverence',
+        description: 'Reverent praying hands and radiant sunburst over an open journal adorned with blooming roses.'
       },
       {
         url: '/images/colouewhirl_wellness/page_23.jpg',
-        title: 'African Heritage & Core Identity',
-        description: 'Dignified portrait celebrating cultural roots, beaded adornments, and homeland skies.'
+        title: 'Celebrating Achievements & Milestones',
+        description: 'Joyful birthday celebration with close friends, festive cake, balloons, and gifts.'
       }
     ],
     features: [
@@ -148,22 +148,22 @@ export const BOOKS: Book[] = [
       {
         url: '/images/kids_colouring_books/page_8.jpg',
         title: 'Domestic Animals on the Farm',
-        description: 'Cows, horses, sheep, goats, rabbits, camels, and friendly donkeys.'
+        description: 'Cows, horses, sheep, goats, rabbits, camels, pigs, and friendly donkeys.'
       },
       {
         url: '/images/kids_colouring_books/page_9.jpg',
         title: 'Safari & Wild Animals',
-        description: 'Hippos, rhinos, lions, monkeys, tigers, and baboons.'
+        description: 'Hippos, rhinos, kangaroos, monkeys, tigers, baboons, hyenas, and wolves.'
       },
       {
         url: '/images/kids_colouring_books/page_11.jpg',
         title: 'Under the Sea Creatures',
-        description: 'Dolphins, sea turtles, octopuses, crabs, and smiling whales.'
+        description: 'Dolphins, sea turtles, octopuses, crabs, starfish, jellyfish, crocodiles, and smiling whales.'
       },
       {
         url: '/images/kids_colouring_books/page_17.jpg',
         title: 'Healthy Hygiene Habits',
-        description: 'Brushing teeth, washing hands before eating, and taking fresh baths.'
+        description: 'Brushing teeth, washing hands, taking fresh baths, and washing fruits.'
       },
       {
         url: '/images/kids_colouring_books/page_20.jpg',
@@ -196,28 +196,28 @@ export const BOOKS: Book[] = [
     sampleImages: [
       {
         url: '/images/kids_book___abc/page_3.jpg',
-        title: 'Welcome Poem & Inspiration',
-        description: 'Inspirational intro: "From A for Apple to Z for Zebra, each page invites you to colour, learn and imagine."'
+        title: 'Welcome to ColourWhirl Alphabets',
+        description: 'Inspirational introduction: "From A for Apple to Z for Zebra, each page invites you to colour, learn and imagine."'
       },
       {
         url: '/images/kids_book___abc/page_5.jpg',
         title: 'Letter A — Apple, Ant, Aeroplane',
-        description: 'Upper and lower case A with three distinct coloring items.'
+        description: 'Upper and lower case Aa with three distinct phonics coloring items.'
       },
       {
         url: '/images/kids_book___abc/page_6.jpg',
         title: 'Letter B — Ball, Banana, Book',
-        description: 'Large clear letters and everyday items to reinforce phonics.'
+        description: 'Upper and lower case Bb with clear everyday items to reinforce phonics.'
       },
       {
         url: '/images/kids_book___abc/page_7.jpg',
         title: 'Letter C — Cat, Cup, Car',
-        description: 'Engaging character art designed to make letter recognition exciting.'
+        description: 'Upper and lower case Cc with friendly character art and everyday objects.'
       },
       {
         url: '/images/kids_book___abc/page_8.jpg',
         title: 'Letter D — Dog, Duck, Donut',
-        description: 'Playful animal line art and delicious treat.'
+        description: 'Upper and lower case Dd with playful animal line art and a sweet treat.'
       }
     ],
     features: [
