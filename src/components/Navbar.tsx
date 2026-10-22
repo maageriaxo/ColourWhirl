@@ -14,7 +14,7 @@ export const Navbar: React.FC<NavbarProps> = ({ cartCount, profile, onOpenAccoun
 
   const navLinks = [
     { to: '/', label: 'Home' },
-    { to: '/books', label: 'All Books' },
+    { to: '/books', label: 'Products' },
     { to: '/wellness', label: 'Wellness Journal' },
     { to: '/about', label: 'About Us' },
     { to: '/contact', label: 'Contact' },
